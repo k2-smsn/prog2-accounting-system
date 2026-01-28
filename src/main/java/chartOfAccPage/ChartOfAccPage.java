@@ -40,6 +40,8 @@ public class ChartOfAccPage {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         
+        //TOP PANEL
+        
         //NAME SECTION
         
         JPanel namePanel = new JPanel();
@@ -50,11 +52,29 @@ public class ChartOfAccPage {
         nameLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
 
         JTextField nameField = new JTextField();
-        Dimension nameFieldSize = new Dimension(600, 36);
+        Dimension nameFieldSize = new Dimension(170, 36);
         nameField.setPreferredSize(nameFieldSize);
         nameField.setMinimumSize(nameFieldSize);
         nameField.setMaximumSize(nameFieldSize);
         nameField.setFont(new Font("MV Boli", Font.PLAIN, 24));
+        
+        //VALUE SECTION
+        
+        //JPanel valuePanel = new JPanel();
+        //valuePanel.setLayout(new BoxLayout(valuePanel, BoxLayout.X_AXIS));
+        
+        JLabel valueLabel = new JLabel("Amount: ");
+        valueLabel.setBorder(new LineBorder(Color.BLACK));
+        valueLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
+        valueLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        JTextField valueField = new JTextField();
+        Dimension valueFieldSize = new Dimension(180, 36);
+        valueField.setPreferredSize(valueFieldSize);
+        valueField.setMinimumSize(valueFieldSize);
+        valueField.setMaximumSize(valueFieldSize);
+        valueField.setFont(new Font("MV Boli", Font.PLAIN, 24));
+        
         
         //TYPE SECTION
         
@@ -76,14 +96,18 @@ public class ChartOfAccPage {
         
             // Submit button
            
-        JButton submitBtn = new JButton();
-        submitBtn.setText("Submit");
+        JButton submitBtn = new JButton("Submit");
         Dimension btnSize = new Dimension(120, 40);
         submitBtn.setPreferredSize(btnSize);
         submitBtn.setMinimumSize(btnSize);
         submitBtn.setMaximumSize(btnSize);
         submitBtn.setFont(new Font("MV Boli", Font.PLAIN, 24));
         submitBtn.setFocusable(false);
+        
+        submitBtn.addActionListener(e -> {
+            String newName = nameField.getText();
+            String newType = typeCombo.getSelectedItem().toString();
+        });
         
         //ACCOUNTS PANEL
         
@@ -98,6 +122,10 @@ public class ChartOfAccPage {
         namePanel.add(nameLabel);
         namePanel.add(Box.createRigidArea(new Dimension(10, 0)));
         namePanel.add(nameField);
+        namePanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        namePanel.add(valueLabel);
+        namePanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        namePanel.add(valueField);
         namePanel.add(Box.createHorizontalGlue());
         
         //TYPE ADDING

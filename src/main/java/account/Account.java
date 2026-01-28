@@ -4,11 +4,13 @@
  */
 package account;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author k2
  */
-public class Account {
+public class Account extends JPanel{
     private String name;
     private String type;
     private double value;

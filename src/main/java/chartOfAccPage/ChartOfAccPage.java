@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 
 public class ChartOfAccPage {
@@ -75,6 +78,10 @@ public class ChartOfAccPage {
         valueField.setMaximumSize(valueFieldSize);
         valueField.setFont(new Font("MV Boli", Font.PLAIN, 24));
         
+        //ACCOUNTS PANEL
+        
+        JPanel accsPanel = new JPanel();
+        accsPanel.setLayout(new BoxLayout(accsPanel, BoxLayout.Y_AXIS));
         
         //TYPE SECTION
         
@@ -104,16 +111,38 @@ public class ChartOfAccPage {
         submitBtn.setFont(new Font("MV Boli", Font.PLAIN, 24));
         submitBtn.setFocusable(false);
         
-        submitBtn.addActionListener(e -> {
-            String newName = nameField.getText();
-            String newType = typeCombo.getSelectedItem().toString();
-        });
-        
-        //ACCOUNTS PANEL
-        
-        JPanel accsPanel = new JPanel();
-        accsPanel.setLayout(new BoxLayout(namePanel, BoxLayout.Y_AXIS));
-        
+        submitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newName = nameField.getText();
+                String newType = typeCombo.getSelectedItem().toString();
+                int newValue = Integer.parseInt(valueField.getText());
+                
+                //gagawin to class yung asa baba
+                JPanel newAccPanel = new JPanel();
+                newAccPanel.setLayout(new BoxLayout(newAccPanel, BoxLayout.X_AXIS));
+                newAccPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
+                newAccPanel.setBorder(new EtchedBorder());
+                
+                
+                JLabel newNameLabel = new JLabel("Name: " + newName);
+                JLabel newTypeLabel = new JLabel("Type: " + newType);
+                JLabel newValueLabel = new JLabel("Value: " + Integer.toString(newValue));
+                
+                newAccPanel.add(newNameLabel);
+                newAccPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+                newAccPanel.add(newTypeLabel);
+                newAccPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+                newAccPanel.add(newValueLabel);
+                //hanggang dine
+                
+                accsPanel.add(newAccPanel);
+                accsPanel.revalidate();
+                accsPanel.repaint();
+                
+                System.out.print("Success");
+            }
+        });        
 
         //ADDING SECTION
         //NAME ADDING
@@ -141,8 +170,12 @@ public class ChartOfAccPage {
         //MAIN PANEL ADDING
 
         mainPanel.add(namePanel);
-        namePanel.add(Box.createRigidArea(new Dimension(0, 90)));
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         mainPanel.add(typePanel);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 90)));
+        mainPanel.add(accsPanel);
+        
+        
         
         //MAIN FRAME SETUP
 

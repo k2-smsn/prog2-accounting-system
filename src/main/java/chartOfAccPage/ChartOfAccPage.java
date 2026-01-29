@@ -9,6 +9,7 @@ package chartOfAccPage;
  * @author k2
  */
 
+import account.Account;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -45,11 +46,11 @@ public class ChartOfAccPage {
         
         //TOP PANEL
         
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+
         //NAME SECTION
         
-        JPanel namePanel = new JPanel();
-        namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
-
         JLabel nameLabel = new JLabel("Name:");
         nameLabel.setBorder(new LineBorder(Color.BLACK));
         nameLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
@@ -66,7 +67,7 @@ public class ChartOfAccPage {
         //JPanel valuePanel = new JPanel();
         //valuePanel.setLayout(new BoxLayout(valuePanel, BoxLayout.X_AXIS));
         
-        JLabel valueLabel = new JLabel("Amount: ");
+        JLabel valueLabel = new JLabel("Value: ");
         valueLabel.setBorder(new LineBorder(Color.BLACK));
         valueLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
         valueLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -116,9 +117,9 @@ public class ChartOfAccPage {
             public void actionPerformed(ActionEvent e) {
                 String newName = nameField.getText();
                 String newType = typeCombo.getSelectedItem().toString();
-                int newValue = Integer.parseInt(valueField.getText());
+                double newValue = Integer.parseInt(valueField.getText());
                 
-                //gagawin to class yung asa baba
+                /*/gagawin to class yung asa baba
                 JPanel newAccPanel = new JPanel();
                 newAccPanel.setLayout(new BoxLayout(newAccPanel, BoxLayout.X_AXIS));
                 newAccPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
@@ -134,7 +135,9 @@ public class ChartOfAccPage {
                 newAccPanel.add(newTypeLabel);
                 newAccPanel.add(Box.createRigidArea(new Dimension(10, 0)));
                 newAccPanel.add(newValueLabel);
-                //hanggang dine
+                //hanggang dine */
+                
+                Account newAccPanel = new Account(newName, newType, newValue);
                 
                 accsPanel.add(newAccPanel);
                 accsPanel.revalidate();
@@ -147,15 +150,15 @@ public class ChartOfAccPage {
         //ADDING SECTION
         //NAME ADDING
         
-        namePanel.add(Box.createHorizontalGlue());
-        namePanel.add(nameLabel);
-        namePanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        namePanel.add(nameField);
-        namePanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        namePanel.add(valueLabel);
-        namePanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        namePanel.add(valueField);
-        namePanel.add(Box.createHorizontalGlue());
+        topPanel.add(Box.createHorizontalGlue());
+        topPanel.add(nameLabel);
+        topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        topPanel.add(nameField);
+        topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        topPanel.add(valueLabel);
+        topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        topPanel.add(valueField);
+        topPanel.add(Box.createHorizontalGlue());
         
         //TYPE ADDING
         
@@ -169,7 +172,7 @@ public class ChartOfAccPage {
         
         //MAIN PANEL ADDING
 
-        mainPanel.add(namePanel);
+        mainPanel.add(topPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         mainPanel.add(typePanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 90)));

@@ -28,6 +28,9 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 
 public class ChartOfAccPage {
+    
+    static JLabel warnLabel = new JLabel("-");
+    
     public static void main(String[] args) {
         //SHARED VARIABLES
         
@@ -115,37 +118,37 @@ public class ChartOfAccPage {
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String newName = nameField.getText();
-                String newType = typeCombo.getSelectedItem().toString();
-                double newValue = Integer.parseInt(valueField.getText());
+                try {
+                    String newName = nameField.getText();
+                    String newType = typeCombo.getSelectedItem().toString();
+                    double newValue = Integer.parseInt(valueField.getText());
+
+                    Account newAccPanel = new Account(newName, newType, newValue);
+
+                    accsPanel.add(newAccPanel);
+                    accsPanel.revalidate();
+                    accsPanel.repaint();
+
+                    System.out.print("Success");
+                } catch (Exception ex) {
+                    warnLabel.setText("Invalid input");
+                }
                 
-                /*/gagawin to class yung asa baba
-                JPanel newAccPanel = new JPanel();
-                newAccPanel.setLayout(new BoxLayout(newAccPanel, BoxLayout.X_AXIS));
-                newAccPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
-                newAccPanel.setBorder(new EtchedBorder());
-                
-                
-                JLabel newNameLabel = new JLabel("Name: " + newName);
-                JLabel newTypeLabel = new JLabel("Type: " + newType);
-                JLabel newValueLabel = new JLabel("Value: " + Integer.toString(newValue));
-                
-                newAccPanel.add(newNameLabel);
-                newAccPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-                newAccPanel.add(newTypeLabel);
-                newAccPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-                newAccPanel.add(newValueLabel);
-                //hanggang dine */
-                
-                Account newAccPanel = new Account(newName, newType, newValue);
-                
-                accsPanel.add(newAccPanel);
-                accsPanel.revalidate();
-                accsPanel.repaint();
-                
-                System.out.print("Success");
             }
         });        
+        
+        //WARNING SECTION
+        
+        warnLabel.setHorizontalAlignment(JLabel.CENTER);
+
+        Dimension warnSize = new Dimension(300, 36);
+        warnLabel.setPreferredSize(warnSize);
+        warnLabel.setMinimumSize(warnSize);
+        warnLabel.setMaximumSize(warnSize);
+
+        warnLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        warnLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
 
         //ADDING SECTION
         //NAME ADDING
@@ -171,10 +174,13 @@ public class ChartOfAccPage {
         typePanel.add(Box.createHorizontalGlue());
         
         //MAIN PANEL ADDING
-
+        
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         mainPanel.add(topPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         mainPanel.add(typePanel);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        mainPanel.add(warnLabel);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 90)));
         mainPanel.add(accsPanel);
         
@@ -192,6 +198,6 @@ public class ChartOfAccPage {
     
 }
 
-//Next should be submit button functionality
-    //- account panel class
-    //- dynamic creation
+//Next should be exception handling
+//sql
+//another feature

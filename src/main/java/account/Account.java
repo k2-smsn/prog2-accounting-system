@@ -4,9 +4,13 @@
  */
 package account;
 
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
@@ -37,12 +41,28 @@ public class Account extends JPanel{
         JLabel newNameLabel = new JLabel("Name: " + this.name);
         JLabel newTypeLabel = new JLabel("Type: " + this.type);
         JLabel newValueLabel = new JLabel("Value: " + Double.toString(this.value));
+        
+        JButton newDelBtn = new JButton("X");
+        newDelBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                   Container parent = Account.this.getParent();
+                    if (parent != null) {
+                        parent.remove(Account.this);
+                        parent.revalidate();
+                        parent.repaint();
+                    }
+                }
+            });        
                 
         add(newNameLabel);
         add(Box.createRigidArea(new Dimension(10, 0)));
         add(newTypeLabel);
         add(Box.createRigidArea(new Dimension(10, 0)));
         add(newValueLabel);
+        add(Box.createHorizontalGlue());
+        add(newDelBtn);
+        add(Box.createRigidArea(new Dimension(10, 0)));
     }
     
     public String getName() {

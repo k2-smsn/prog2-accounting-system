@@ -9,10 +9,13 @@ package journalEntryPage;
  * @author k2
  */
 
+import java.awt.Component;
 import datePanel.DatePanel;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import journalLine.JournalLine;
 
 public class JournalEntryPanel extends JPanel{
@@ -25,7 +28,7 @@ public class JournalEntryPanel extends JPanel{
         setLayout(new BorderLayout(10, 10));
 
         add(createHeaderPanel(), BorderLayout.NORTH);
-        add(createTablePanel(), BorderLayout.CENTER);
+        add(createJournLinesPanel(), BorderLayout.CENTER);
         add(createButtonPanel(), BorderLayout.SOUTH);
     }
 
@@ -36,20 +39,21 @@ public class JournalEntryPanel extends JPanel{
 
         JPanel descPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel descLabel = new JLabel("Description:");
-        descLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
-        descPanel.add(descLabel);
         
         descriptionField = new JTextField(30);
-        descriptionField.setFont(new Font("MV Boli", Font.PLAIN, 24));
         descPanel.add(descriptionField);
-
+        
+        ArrayList<Component> c = new ArrayList<>(Arrays.asList(descLabel, descriptionField));
+        setFont(c);
+        
+        descPanel.add(descLabel);
         panel.add(datePanel);
         panel.add(descPanel);
 
         return panel;
     }
 
-    private JScrollPane createTablePanel() {
+    private JScrollPane createJournLinesPanel() {
         journLinesPanel.setLayout(new BoxLayout(journLinesPanel, BoxLayout.Y_AXIS));
         return new JScrollPane(journLinesPanel);
     }
@@ -59,9 +63,7 @@ public class JournalEntryPanel extends JPanel{
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         JButton addLineBtn = new JButton("Add Line");
-        addLineBtn.setFont(new Font("MV Boli", Font.PLAIN, 24));
         JButton submitBtn = new JButton("Submit");
-        submitBtn.setFont(new Font("MV Boli", Font.PLAIN, 24));
 
         addLineBtn.addActionListener(e -> {
             journLinesPanel.add(new JournalLine());
@@ -71,11 +73,20 @@ public class JournalEntryPanel extends JPanel{
 
 
         submitBtn.addActionListener(e -> {});
+        
+        ArrayList<Component> c = new ArrayList<>(Arrays.asList(addLineBtn, submitBtn));
+        setFont(c);
 
         panel.add(addLineBtn);
         panel.add(submitBtn);
 
         return panel;
+    }
+    
+    public void setFont(ArrayList<Component> comps) {
+        for (int i = 0; i < comps.size(); i++) {
+            comps.get(i).setFont(new Font("MV Boli", Font.PLAIN, 24));
+        }
     }
 
     public LocalDate getDate() {

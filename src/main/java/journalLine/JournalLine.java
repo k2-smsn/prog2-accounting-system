@@ -61,10 +61,7 @@ public class JournalLine extends JPanel{
         );
         
         JLabel amountLabel = new JLabel("Amount: ");
-        amountLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
-
         JTextField amountField = new JTextField(8);
-        amountField.setFont(new Font("MV Boli", Font.PLAIN, 24));
 
         amountField.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) { sync(); }

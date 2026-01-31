@@ -16,6 +16,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -26,6 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
+import java.awt.Component;
 
 public class ChartOfAccPage {
     
@@ -33,7 +36,6 @@ public class ChartOfAccPage {
     
     public static void main(String[] args) {
         //SHARED VARIABLES
-        
         
         
         //MAIN FRAME
@@ -56,14 +58,12 @@ public class ChartOfAccPage {
         
         JLabel nameLabel = new JLabel("Name:");
         nameLabel.setBorder(new LineBorder(Color.BLACK));
-        nameLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
 
         JTextField nameField = new JTextField();
         Dimension nameFieldSize = new Dimension(170, 36);
         nameField.setPreferredSize(nameFieldSize);
         nameField.setMinimumSize(nameFieldSize);
         nameField.setMaximumSize(nameFieldSize);
-        nameField.setFont(new Font("MV Boli", Font.PLAIN, 24));
         
         //VALUE SECTION
         
@@ -80,7 +80,6 @@ public class ChartOfAccPage {
         valueField.setPreferredSize(valueFieldSize);
         valueField.setMinimumSize(valueFieldSize);
         valueField.setMaximumSize(valueFieldSize);
-        valueField.setFont(new Font("MV Boli", Font.PLAIN, 24));
         
         //ACCOUNTS PANEL
         
@@ -103,7 +102,6 @@ public class ChartOfAccPage {
         typeCombo.setPreferredSize(typeComboSize);
         typeCombo.setMinimumSize(typeComboSize);
         typeCombo.setMaximumSize(typeComboSize);
-        typeCombo.setFont(new Font("MV Boli", Font.PLAIN, 24));
         
             // Submit button
            
@@ -112,7 +110,6 @@ public class ChartOfAccPage {
         submitBtn.setPreferredSize(btnSize);
         submitBtn.setMinimumSize(btnSize);
         submitBtn.setMaximumSize(btnSize);
-        submitBtn.setFont(new Font("MV Boli", Font.PLAIN, 24));
         submitBtn.setFocusable(false);
         
         submitBtn.addActionListener(new ActionListener() {
@@ -147,8 +144,22 @@ public class ChartOfAccPage {
         warnLabel.setMaximumSize(warnSize);
 
         warnLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        warnLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
+        
+        //FONT SETTING
+        
+        ArrayList<Component> c = new ArrayList<>(Arrays.asList(
+                nameLabel,
+                nameField,
+                valueLabel,
+                valueField,
+                typeLabel,
+                typeCombo,
+                submitBtn,
+                warnLabel
+                
+        ));
+        
+        setFont(c);
 
         //ADDING SECTION
         //NAME ADDING
@@ -181,19 +192,20 @@ public class ChartOfAccPage {
         mainPanel.add(typePanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         mainPanel.add(warnLabel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 90)));
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
         mainPanel.add(accsPanel);
-        
-        
         
         //MAIN FRAME SETUP
 
         mainFrame.setContentPane(mainPanel);
         mainFrame.setSize(720, 720);
         mainFrame.setVisible(true);
-
-        
-        
+    }
+    
+    public static void setFont(ArrayList<Component> comps) {
+        for (int i = 0; i < comps.size(); i++) {
+            comps.get(i).setFont(new Font("MV Boli", Font.PLAIN, 24));
+        }
     }
     
 }

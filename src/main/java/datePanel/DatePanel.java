@@ -13,7 +13,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.awt.Component;
 
 public class DatePanel extends JPanel{
     private JSpinner dateSpinner;
@@ -39,6 +42,9 @@ public class DatePanel extends JPanel{
         // Format date
         JSpinner.DateEditor editor = new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd");
         dateSpinner.setEditor(editor);
+        
+        ArrayList<Component> c = new ArrayList<>(Arrays.asList(label, dateSpinner));
+        setFont(c);
 
         add(label);
         add(dateSpinner);
@@ -50,6 +56,12 @@ public class DatePanel extends JPanel{
         return date.toInstant()
                    .atZone(ZoneId.systemDefault())
                    .toLocalDate();
+    }
+    
+    public void setFont(ArrayList<Component> comps) {
+        for (int i = 0; i < comps.size(); i++) {
+            comps.get(i).setFont(new Font("MV Boli", Font.PLAIN, 24));
+        }
     }
 
 }

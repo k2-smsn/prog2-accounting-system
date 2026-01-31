@@ -4,7 +4,12 @@
  */
 package journalLine;
 
+import account.Account;
+import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,6 +32,8 @@ public class JournalLine extends JPanel{
     }
 
     void buildPanel() {
+        
+        JLabel nameLabel = new JLabel("Name: ");
 
         JTextField nameField = new JTextField(15);
 
@@ -39,6 +46,8 @@ public class JournalLine extends JPanel{
                 name = nameField.getText();
             }
         });
+        
+        JLabel modeLabel = new JLabel("Mode: ");
 
         JComboBox<String> modeCombo =
                 new JComboBox<>(new String[]{"Debit", "Credit"});
@@ -46,6 +55,8 @@ public class JournalLine extends JPanel{
         modeCombo.addActionListener(e ->
                 mode = (String) modeCombo.getSelectedItem()
         );
+        
+        JLabel amountLabel = new JLabel("Amount: ");
 
         JTextField amountField = new JTextField(8);
 
@@ -62,10 +73,27 @@ public class JournalLine extends JPanel{
                 }
             }
         });
+        
+        JButton newDelBtn = new JButton("X");
+        newDelBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                   Container parent = JournalLine.this.getParent();
+                    if (parent != null) {
+                        parent.remove(JournalLine.this);
+                        parent.revalidate();
+                        parent.repaint();
+                    }
+                }
+            });        
 
+        add(nameLabel);
         add(nameField);
+        add(modeLabel);
         add(modeCombo);
+        add(amountLabel);
         add(amountField);
+        add(newDelBtn);
     }
     
     public String getName() {

@@ -55,7 +55,7 @@ public class JournalEntryPanel extends JPanel{
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         JButton addLineBtn = new JButton("Add Line");
-        JButton removeLineBtn = new JButton("Remove Line");
+        JButton submitBtn = new JButton("Submit");
 
         addLineBtn.addActionListener(e -> {
             journLinesPanel.add(new JournalLine());
@@ -64,10 +64,10 @@ public class JournalEntryPanel extends JPanel{
         });
 
 
-        removeLineBtn.addActionListener(e -> {});
+        submitBtn.addActionListener(e -> {});
 
         panel.add(addLineBtn);
-        panel.add(removeLineBtn);
+        panel.add(submitBtn);
 
         return panel;
     }

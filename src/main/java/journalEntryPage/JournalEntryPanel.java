@@ -11,17 +11,15 @@ package journalEntryPage;
 
 import datePanel.DatePanel;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import journalLine.JournalLine;
 
 public class JournalEntryPanel extends JPanel{
     
     private DatePanel datePanel;
     private JTextField descriptionField;
-    private JTable lineTable;
-    private DefaultTableModel tableModel;
+    private JPanel journLinesPanel = new JPanel();
 
     public JournalEntryPanel() {
         setLayout(new BorderLayout(10, 10));
@@ -48,9 +46,7 @@ public class JournalEntryPanel extends JPanel{
     }
 
     private JScrollPane createTablePanel() {
-
-        JPanel journLinesPanel = new JPanel();
-
+        journLinesPanel.setLayout(new BoxLayout(journLinesPanel, BoxLayout.Y_AXIS));
         return new JScrollPane(journLinesPanel);
     }
 
@@ -61,16 +57,14 @@ public class JournalEntryPanel extends JPanel{
         JButton addLineBtn = new JButton("Add Line");
         JButton removeLineBtn = new JButton("Remove Line");
 
-        addLineBtn.addActionListener(e ->
-                tableModel.addRow(new Object[]{"", "FROM", BigDecimal.ZERO})
-        );
-
-        removeLineBtn.addActionListener(e -> {
-            int row = lineTable.getSelectedRow();
-            if (row >= 0) {
-                tableModel.removeRow(row);
-            }
+        addLineBtn.addActionListener(e -> {
+            journLinesPanel.add(new JournalLine());
+            journLinesPanel.revalidate();
+            journLinesPanel.repaint();
         });
+
+
+        removeLineBtn.addActionListener(e -> {});
 
         panel.add(addLineBtn);
         panel.add(removeLineBtn);
@@ -85,9 +79,6 @@ public class JournalEntryPanel extends JPanel{
     public String getDescription() {
         return descriptionField.getText();
     }
-
-    public DefaultTableModel getLineModel() {
-        return tableModel;
-    }
+    
 }
 

@@ -22,6 +22,8 @@ public class DatePanel extends JPanel{
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
         JLabel label = new JLabel("Date:");
+        label.setPreferredSize(new Dimension(100, 40));
+        label.setFont(new Font("MV Boli", Font.PLAIN, 24));
 
         SpinnerDateModel model = new SpinnerDateModel(
                 new Date(),   // initial value
@@ -31,6 +33,8 @@ public class DatePanel extends JPanel{
         );
 
         dateSpinner = new JSpinner(model);
+        dateSpinner.setPreferredSize(new Dimension(180, 40));
+        dateSpinner.setFont(new Font("MV Boli", Font.PLAIN, 24));
 
         // Format date
         JSpinner.DateEditor editor = new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd");

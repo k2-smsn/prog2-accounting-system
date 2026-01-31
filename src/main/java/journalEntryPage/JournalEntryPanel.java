@@ -35,8 +35,12 @@ public class JournalEntryPanel extends JPanel{
         datePanel = new DatePanel();
 
         JPanel descPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        descPanel.add(new JLabel("Description:"));
+        JLabel descLabel = new JLabel("Description:");
+        descLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
+        descPanel.add(descLabel);
+        
         descriptionField = new JTextField(30);
+        descriptionField.setFont(new Font("MV Boli", Font.PLAIN, 24));
         descPanel.add(descriptionField);
 
         panel.add(datePanel);
@@ -55,7 +59,9 @@ public class JournalEntryPanel extends JPanel{
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         JButton addLineBtn = new JButton("Add Line");
+        addLineBtn.setFont(new Font("MV Boli", Font.PLAIN, 24));
         JButton submitBtn = new JButton("Submit");
+        submitBtn.setFont(new Font("MV Boli", Font.PLAIN, 24));
 
         addLineBtn.addActionListener(e -> {
             journLinesPanel.add(new JournalLine());

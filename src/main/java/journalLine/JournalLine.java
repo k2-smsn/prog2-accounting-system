@@ -5,10 +5,14 @@
 package journalLine;
 
 import account.Account;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -57,8 +61,10 @@ public class JournalLine extends JPanel{
         );
         
         JLabel amountLabel = new JLabel("Amount: ");
+        amountLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
 
         JTextField amountField = new JTextField(8);
+        amountField.setFont(new Font("MV Boli", Font.PLAIN, 24));
 
         amountField.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) { sync(); }
@@ -75,6 +81,7 @@ public class JournalLine extends JPanel{
         });
         
         JButton newDelBtn = new JButton("X");
+        newDelBtn.setFont(new Font("MV Boli", Font.PLAIN, 24));
         newDelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,7 +93,19 @@ public class JournalLine extends JPanel{
                     }
                 }
             });        
-
+        
+        ArrayList<Component> c = new ArrayList<>(Arrays.asList(
+                nameLabel,
+                nameField,
+                modeLabel,
+                modeCombo,
+                amountLabel,
+                amountField
+                
+        ));
+        
+        setFont(c);
+        
         add(nameLabel);
         add(nameField);
         add(modeLabel);
@@ -94,6 +113,12 @@ public class JournalLine extends JPanel{
         add(amountLabel);
         add(amountField);
         add(newDelBtn);
+    }
+    
+    public void setFont(ArrayList<Component> comps) {
+        for (int i = 0; i < comps.size(); i++) {
+            comps.get(i).setFont(new Font("MV Boli", Font.PLAIN, 24));
+        }
     }
     
     public String getName() {

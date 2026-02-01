@@ -41,12 +41,13 @@ public class JournalEntryPanel extends JPanel{
         JLabel descLabel = new JLabel("Description:");
         
         descriptionField = new JTextField(30);
-        descPanel.add(descriptionField);
         
         ArrayList<Component> c = new ArrayList<>(Arrays.asList(descLabel, descriptionField));
         setFont(c);
         
         descPanel.add(descLabel);
+        descPanel.add(descriptionField);
+        
         panel.add(datePanel);
         panel.add(descPanel);
 

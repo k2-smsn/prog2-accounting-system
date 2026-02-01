@@ -29,10 +29,10 @@ public class Account extends JPanel{
         this.type = type;
         this.value = value;
         
-        buildPanel();
+        //buildPanel();
     }
     
-    private void buildPanel() {
+    public void buildPanel() {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
         setBorder(new EtchedBorder());

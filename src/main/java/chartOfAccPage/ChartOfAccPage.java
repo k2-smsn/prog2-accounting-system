@@ -121,6 +121,7 @@ public class ChartOfAccPage {
                     double newValue = Integer.parseInt(valueField.getText());
 
                     Account newAccPanel = new Account(newName, newType, newValue);
+                    newAccPanel.buildPanel();
 
                     accsPanel.add(newAccPanel);
                     accsPanel.revalidate();
@@ -209,7 +210,3 @@ public class ChartOfAccPage {
     }
     
 }
-
-//Next should be exception handling
-//sql
-//another feature

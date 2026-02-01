@@ -4,10 +4,14 @@
  */
 package account;
 
+import common.DataBase;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static java.lang.Math.random;
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,16 +24,18 @@ import javax.swing.border.EtchedBorder;
  * @author k2
  */
 public class Account extends JPanel{
+    private String id;
     private String name;
     private String type;
     private double value;
     
+    //static ArrayList<Account> accounts = common.DataBase.getAccounts();
+    
     public Account(String name, String type, double value) {
+        this.id = randomCode();
         this.name = name;
         this.type = type;
         this.value = value;
-        
-        //buildPanel();
     }
     
     public void buildPanel() {
@@ -46,7 +52,9 @@ public class Account extends JPanel{
         newDelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                   Container parent = Account.this.getParent();
+                    common.DataBase.removeAcc(Account.this);
+                
+                    Container parent = Account.this.getParent();
                     if (parent != null) {
                         parent.remove(Account.this);
                         parent.revalidate();
@@ -65,6 +73,10 @@ public class Account extends JPanel{
         add(Box.createRigidArea(new Dimension(10, 0)));
     }
     
+    public String getId() {
+        return this.id;
+    }
+    
     public String getName() {
         return this.name;
     }
@@ -76,4 +88,18 @@ public class Account extends JPanel{
     public double getValue() {
         return this.value;
     }
+
+    static String randomCode() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder code = new StringBuilder(3);
+
+        for (int i = 0; i < 3; i++) {
+            code.append(chars.charAt(
+                ThreadLocalRandom.current().nextInt(chars.length())
+            ));
+        }
+
+        return code.toString();
+    }
+
 }

@@ -72,7 +72,6 @@ public class JournalEntryPanel extends JPanel{
             journLinesPanel.repaint();
         });
 
-
         submitBtn.addActionListener(e -> {});
         
         ArrayList<Component> c = new ArrayList<>(Arrays.asList(addLineBtn, submitBtn));

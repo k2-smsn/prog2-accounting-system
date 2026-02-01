@@ -10,6 +10,7 @@ package chartOfAccPage;
  */
 
 import account.Account;
+import common.DataBase;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -112,26 +113,28 @@ public class ChartOfAccPage {
         submitBtn.setMaximumSize(btnSize);
         submitBtn.setFocusable(false);
         
-        submitBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String newName = nameField.getText();
-                    String newType = typeCombo.getSelectedItem().toString();
-                    double newValue = Integer.parseInt(valueField.getText());
-
-                    Account newAccPanel = new Account(newName, newType, newValue);
-                    newAccPanel.buildPanel();
-
-                    accsPanel.add(newAccPanel);
-                    accsPanel.revalidate();
-                    accsPanel.repaint();
-
-                    System.out.print("Success");
-                } catch (Exception ex) {
-                    warnLabel.setText("Invalid input");
-                }
+        submitBtn.addActionListener((ActionEvent e) -> {
+            try {
+                String newName = nameField.getText();
+                String newType = typeCombo.getSelectedItem().toString();
+                double newValue = Integer.parseInt(valueField.getText());
                 
+                Account newAccPanel = new Account(newName, newType, newValue);
+                newAccPanel.buildPanel();
+                
+                common.DataBase.addAccount(newAccPanel);
+                
+                accsPanel.add(newAccPanel);
+                accsPanel.revalidate();
+                accsPanel.repaint();
+                
+                nameField.setText("");
+                valueField.setText("");
+                
+                System.out.print(common.DataBase.getAccNames());
+            } 
+            catch (Exception ex) {
+                warnLabel.setText("Invalid input");
             }
         });        
         

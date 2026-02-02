@@ -10,13 +10,11 @@ package chartOfAccPage;
  */
 
 import account.Account;
-import common.DataBase;
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.Box;
@@ -27,34 +25,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Component;
+import javax.swing.JScrollPane;
 
 public class ChartOfAccPage {
     
     static JLabel warnLabel = new JLabel("-");
+    static JPanel accsPanel = new JPanel();
     
     public static void main(String[] args) {
-        //SHARED VARIABLES
-        
-        
-        //MAIN FRAME
-        
-        JFrame mainFrame = new JFrame("Chart of Accounts");
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setResizable(false);
-        
-        //MAIN PANEL
-        
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        
-        //TOP PANEL
-        
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-
         //NAME SECTION
         
         JLabel nameLabel = new JLabel("Name:");
@@ -68,9 +48,6 @@ public class ChartOfAccPage {
         
         //VALUE SECTION
         
-        //JPanel valuePanel = new JPanel();
-        //valuePanel.setLayout(new BoxLayout(valuePanel, BoxLayout.X_AXIS));
-        
         JLabel valueLabel = new JLabel("Value: ");
         valueLabel.setBorder(new LineBorder(Color.BLACK));
         valueLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
@@ -82,10 +59,20 @@ public class ChartOfAccPage {
         valueField.setMinimumSize(valueFieldSize);
         valueField.setMaximumSize(valueFieldSize);
         
-        //ACCOUNTS PANEL
+        //NAME AND VALUE PANEL
         
-        JPanel accsPanel = new JPanel();
-        accsPanel.setLayout(new BoxLayout(accsPanel, BoxLayout.Y_AXIS));
+        JPanel nameAndValPanel = new JPanel();
+        nameAndValPanel.setLayout(new BoxLayout(nameAndValPanel, BoxLayout.X_AXIS));
+        
+        nameAndValPanel.add(Box.createHorizontalGlue());
+        nameAndValPanel.add(nameLabel);
+        nameAndValPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        nameAndValPanel.add(nameField);
+        nameAndValPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        nameAndValPanel.add(valueLabel);
+        nameAndValPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        nameAndValPanel.add(valueField);
+        nameAndValPanel.add(Box.createHorizontalGlue());
         
         //TYPE SECTION
         
@@ -138,6 +125,14 @@ public class ChartOfAccPage {
             }
         });        
         
+        typePanel.add(Box.createHorizontalGlue());
+        typePanel.add(typeLabel);
+        typePanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        typePanel.add(typeCombo);
+        typePanel.add(Box.createRigidArea(new Dimension(30, 0)));
+        typePanel.add(submitBtn);
+        typePanel.add(Box.createHorizontalGlue());
+        
         //WARNING SECTION
         
         warnLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -149,6 +144,21 @@ public class ChartOfAccPage {
 
         warnLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         
+        //ACCOUNTS PANEL
+        
+        accsPanel.setLayout(new BoxLayout(accsPanel, BoxLayout.Y_AXIS));
+        
+        //FOOTER
+        
+        JPanel footerPanel = new JPanel();
+        footerPanel.setLayout(new BoxLayout(footerPanel, BoxLayout.X_AXIS));
+        
+        JButton backBtn = new JButton("<");
+        
+        footerPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+        footerPanel.add(backBtn);
+        footerPanel.add(Box.createHorizontalGlue());
+        
         //FONT SETTING
         
         ArrayList<Component> c = new ArrayList<>(Arrays.asList(
@@ -159,48 +169,53 @@ public class ChartOfAccPage {
                 typeLabel,
                 typeCombo,
                 submitBtn,
-                warnLabel
+                warnLabel,
+                backBtn
                 
         ));
         
         setFont(c);
-
-        //ADDING SECTION
-        //NAME ADDING
         
-        topPanel.add(Box.createHorizontalGlue());
-        topPanel.add(nameLabel);
-        topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        topPanel.add(nameField);
-        topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        topPanel.add(valueLabel);
-        topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        topPanel.add(valueField);
-        topPanel.add(Box.createHorizontalGlue());
+        //MAIN PANEL LAYOUTING
         
-        //TYPE ADDING
+        //NORTH PANEL
         
-        typePanel.add(Box.createHorizontalGlue());
-        typePanel.add(typeLabel);
-        typePanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        typePanel.add(typeCombo);
-        typePanel.add(Box.createRigidArea(new Dimension(30, 0)));
-        typePanel.add(submitBtn);
-        typePanel.add(Box.createHorizontalGlue());
+        JPanel northPanel = new JPanel();
+        northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
         
-        //MAIN PANEL ADDING
+        northPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        northPanel.add(nameAndValPanel);
+        northPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        northPanel.add(typePanel);
+        northPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        northPanel.add(warnLabel);
+        northPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        mainPanel.add(topPanel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        mainPanel.add(typePanel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        mainPanel.add(warnLabel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
-        mainPanel.add(accsPanel);
+        //SOUTH PANEL
+        
+        JPanel southPanel = new JPanel();
+        southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
+        
+        southPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        southPanel.add(footerPanel);
+        southPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        
+        
+        //MAIN PANEL 
+        
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        
+        mainPanel.add(northPanel, BorderLayout.NORTH);
+        mainPanel.add(new JScrollPane(accsPanel), BorderLayout.CENTER);
+        mainPanel.add(southPanel, BorderLayout.SOUTH);
         
         //MAIN FRAME SETUP
-
+        
+        JFrame mainFrame = new JFrame("Chart of Accounts");
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setResizable(false);
+        
         mainFrame.setContentPane(mainPanel);
         mainFrame.setSize(720, 720);
         mainFrame.setVisible(true);

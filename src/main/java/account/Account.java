@@ -39,6 +39,8 @@ public class Account extends JPanel{
     }
     
     public void buildPanel() {
+        removeAll();
+        
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
         setBorder(new EtchedBorder());

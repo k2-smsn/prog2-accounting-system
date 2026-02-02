@@ -109,14 +109,15 @@ public class ChartOfAccPanel extends JPanel{
                 double newValue = Integer.parseInt(valueField.getText());
                 
                 Account newAccPanel = new Account(newName, newType, newValue);
-                newAccPanel.buildPanel();
-                
                 common.DataBase.addAccount(newAccPanel);
+                showAccounts();
+                /*
+                newAccPanel.buildPanel();
                 
                 accsPanel.add(newAccPanel);
                 accsPanel.revalidate();
                 accsPanel.repaint();
-                
+                */
                 nameField.setText("");
                 valueField.setText("");
                 
@@ -213,12 +214,27 @@ public class ChartOfAccPanel extends JPanel{
         add(northPanel, BorderLayout.NORTH);
         add(new JScrollPane(accsPanel), BorderLayout.CENTER);
         add(southPanel, BorderLayout.SOUTH);
+        
+        showAccounts();
     }
     
     public static void setFont(ArrayList<Component> comps) {
         for (int i = 0; i < comps.size(); i++) {
             comps.get(i).setFont(new Font("MV Boli", Font.PLAIN, 24));
         }
+    }
+    
+    void showAccounts() {
+        accsPanel.removeAll();
+        
+        for(Account acc : common.DataBase.getAccounts()) {
+            acc.buildPanel();
+            accsPanel.add(acc);
+        }
+
+        
+        accsPanel.revalidate();
+        accsPanel.repaint();
     }
     
 }

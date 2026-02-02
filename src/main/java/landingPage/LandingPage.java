@@ -25,12 +25,12 @@ public class LandingPage extends JPanel{
         
         JButton coaBtn = new JButton("Chart of Accounts");
         coaBtn.addActionListener(e -> {
-            main.showPanel(main.coaPanel);
+            main.showPanel(new ChartOfAccPanel(main));
         }); 
         
         JButton journEntryBtn = new JButton("Journal Entry");
         journEntryBtn.addActionListener(e -> {
-            main.showPanel(main.journEntryPanel);
+            main.showPanel(new JournalEntryPanel(main));
         }); 
         
         JButton ledgerBtn = new JButton("Ledger");

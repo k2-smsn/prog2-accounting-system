@@ -37,19 +37,9 @@ public class JournalLine extends JPanel{
 
     void buildPanel() {
         
-        JLabel nameLabel = new JLabel("Name: ");
+        JLabel accLabel = new JLabel("Account: ");
 
-        JTextField nameField = new JTextField(15);
-
-        nameField.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) { sync(); }
-            public void removeUpdate(DocumentEvent e) { sync(); }
-            public void changedUpdate(DocumentEvent e) { sync(); }
-
-            private void sync() {
-                name = nameField.getText();
-            }
-        });
+        JComboBox<String> accCombo = new JComboBox<>(common.DataBase.getAccNames().toArray(new String[0]));
         
         JLabel modeLabel = new JLabel("Mode: ");
 
@@ -92,8 +82,8 @@ public class JournalLine extends JPanel{
             });        
         
         ArrayList<Component> c = new ArrayList<>(Arrays.asList(
-                nameLabel,
-                nameField,
+                accLabel,
+                accCombo,
                 modeLabel,
                 modeCombo,
                 amountLabel,
@@ -103,8 +93,8 @@ public class JournalLine extends JPanel{
         
         setFont(c);
         
-        add(nameLabel);
-        add(nameField);
+        add(accLabel);
+        add(accCombo);
         add(modeLabel);
         add(modeCombo);
         add(amountLabel);
@@ -125,4 +115,5 @@ public class JournalLine extends JPanel{
     public double getAmount() {
         return this.amount;
     }
+    
 }

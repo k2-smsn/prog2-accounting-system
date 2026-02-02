@@ -28,13 +28,15 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import java.awt.Component;
 import javax.swing.JScrollPane;
+import landingPage.LandingPage;
+import mainFrame.MainFrame;
 
-public class ChartOfAccPage {
+public class ChartOfAccPanel extends JPanel{
     
     static JLabel warnLabel = new JLabel("-");
     static JPanel accsPanel = new JPanel();
     
-    public static void main(String[] args) {
+    public ChartOfAccPanel(MainFrame main) {
         //NAME SECTION
         
         JLabel nameLabel = new JLabel("Name:");
@@ -155,6 +157,10 @@ public class ChartOfAccPage {
         
         JButton backBtn = new JButton("<");
         
+        backBtn.addActionListener(e -> {
+            main.showDefault();
+        });
+        
         footerPanel.add(Box.createRigidArea(new Dimension(10, 10)));
         footerPanel.add(backBtn);
         footerPanel.add(Box.createHorizontalGlue());
@@ -200,25 +206,13 @@ public class ChartOfAccPage {
         southPanel.add(footerPanel);
         southPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         
+        //MAIN PANEL
         
-        //MAIN PANEL 
+        setLayout(new BorderLayout());
         
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        
-        mainPanel.add(northPanel, BorderLayout.NORTH);
-        mainPanel.add(new JScrollPane(accsPanel), BorderLayout.CENTER);
-        mainPanel.add(southPanel, BorderLayout.SOUTH);
-        
-        //MAIN FRAME SETUP
-        
-        JFrame mainFrame = new JFrame("Chart of Accounts");
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setResizable(false);
-        
-        mainFrame.setContentPane(mainPanel);
-        mainFrame.setSize(720, 720);
-        mainFrame.setVisible(true);
+        add(northPanel, BorderLayout.NORTH);
+        add(new JScrollPane(accsPanel), BorderLayout.CENTER);
+        add(southPanel, BorderLayout.SOUTH);
     }
     
     public static void setFont(ArrayList<Component> comps) {

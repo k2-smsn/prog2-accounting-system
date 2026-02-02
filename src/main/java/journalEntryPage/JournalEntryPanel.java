@@ -17,14 +17,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import journalLine.JournalLine;
+import mainFrame.MainFrame;
 
 public class JournalEntryPanel extends JPanel{
     
     private DatePanel datePanel;
     private JTextField descriptionField;
     private JPanel journLinesPanel = new JPanel();
+    private MainFrame main;
 
-    public JournalEntryPanel() {
+    public JournalEntryPanel(MainFrame main) {
+        this.main = main;
+        
         setLayout(new BorderLayout(10, 10));
 
         add(createHeaderPanel(), BorderLayout.NORTH);
@@ -40,7 +44,7 @@ public class JournalEntryPanel extends JPanel{
         JPanel descPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel descLabel = new JLabel("Description:");
         
-        descriptionField = new JTextField(30);
+        descriptionField = new JTextField(25);
         
         ArrayList<Component> c = new ArrayList<>(Arrays.asList(descLabel, descriptionField));
         setFont(c);
@@ -61,11 +65,17 @@ public class JournalEntryPanel extends JPanel{
 
     
     private JPanel createButtonPanel() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        
+        JButton backBtn = new JButton("<");
         JButton addLineBtn = new JButton("Add Line");
         JButton submitBtn = new JButton("Submit");
-
+        
+        backBtn.addActionListener(e -> {
+            main.showDefault();
+        });
+        
         addLineBtn.addActionListener(e -> {
             journLinesPanel.add(new JournalLine());
             journLinesPanel.revalidate();
@@ -74,11 +84,16 @@ public class JournalEntryPanel extends JPanel{
 
         submitBtn.addActionListener(e -> {});
         
-        ArrayList<Component> c = new ArrayList<>(Arrays.asList(addLineBtn, submitBtn));
+        ArrayList<Component> c = new ArrayList<>(Arrays.asList(backBtn, addLineBtn, submitBtn));
         setFont(c);
-
+        
+        panel.add(Box.createRigidArea(new Dimension(10, 0)));
+        panel.add(backBtn);
+        panel.add(Box.createHorizontalGlue());
         panel.add(addLineBtn);
+        panel.add(Box.createRigidArea(new Dimension(10, 0)));
         panel.add(submitBtn);
+        panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
         return panel;
     }

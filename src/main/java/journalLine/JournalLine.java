@@ -41,6 +41,7 @@ public class JournalLine extends JPanel{
         JLabel accLabel = new JLabel("Account: ");
 
         JComboBox<Account> accCombo = new JComboBox<>(common.DataBase.getAccounts().toArray(new Account[0]));
+        account = (Account) accCombo.getSelectedItem();
         
         accCombo.addActionListener(e -> {
             account = (Account) accCombo.getSelectedItem();

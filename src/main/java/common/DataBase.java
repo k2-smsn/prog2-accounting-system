@@ -32,6 +32,16 @@ public class DataBase {
         return accNames;
     }
     
+    public static ArrayList<Double> getAccValues() {
+        ArrayList<Double> accValues = new ArrayList<>();
+        
+        for(int i = 0; i < accounts.size(); i++) {
+            accValues.add(accounts.get(i).getValue());
+        }
+        
+        return accValues;
+    }
+    
     public static void removeAcc(Account a) {
         for(int i = 0; i < accounts.size(); i++) {
             if(accounts.get(i).getId().equals(a.getId())) {

@@ -51,19 +51,15 @@ public class Account extends JPanel{
         JLabel newValueLabel = new JLabel("Value: " + Double.toString(this.value));
         
         JButton newDelBtn = new JButton("X");
-        newDelBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                    common.DataBase.removeAcc(Account.this);
-                
-                    Container parent = Account.this.getParent();
-                    if (parent != null) {
-                        parent.remove(Account.this);
-                        parent.revalidate();
-                        parent.repaint();
-                    }
-                }
-            });        
+        newDelBtn.addActionListener((ActionEvent e) -> {
+            common.DataBase.removeAcc(Account.this);
+            Container parent1 = Account.this.getParent();
+            if (parent1 != null) {
+                parent1.remove(Account.this);
+                parent1.revalidate();
+                parent1.repaint();
+            }
+        });        
                 
         add(newNameLabel);
         add(Box.createRigidArea(new Dimension(10, 0)));
@@ -89,6 +85,20 @@ public class Account extends JPanel{
     
     public double getValue() {
         return this.value;
+    }
+    
+    public void setValue(String operation, double amount) {
+        switch (operation) {
+            case "+":
+                this.value += amount;
+                break;
+            case "-":
+                this.value -= amount;
+                break;
+            default:
+                System.out.print("acc set value error");
+                break;
+        }
     }
 
     static String randomCode() {

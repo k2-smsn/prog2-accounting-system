@@ -111,17 +111,11 @@ public class ChartOfAccPanel extends JPanel{
                 Account newAccPanel = new Account(newName, newType, newValue);
                 common.DataBase.addAccount(newAccPanel);
                 showAccounts();
-                /*
-                newAccPanel.buildPanel();
                 
-                accsPanel.add(newAccPanel);
-                accsPanel.revalidate();
-                accsPanel.repaint();
-                */
                 nameField.setText("");
                 valueField.setText("");
                 
-                System.out.print(common.DataBase.getAccNames());
+                //System.out.print(common.DataBase.getAccNames());
             } 
             catch (Exception ex) {
                 warnLabel.setText("Invalid input");

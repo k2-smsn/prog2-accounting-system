@@ -28,6 +28,7 @@ import javax.swing.event.DocumentListener;
 public class JournalLine extends JPanel{
     private Account account;
     private String mode;
+    private String operation;
     private double amount;
     
     public JournalLine() {
@@ -48,6 +49,7 @@ public class JournalLine extends JPanel{
         JLabel modeLabel = new JLabel("Mode: ");
 
         JComboBox<String> modeCombo = new JComboBox<>(new String[]{"Debit", "Credit"});
+        mode = (String) modeCombo.getSelectedItem();
 
         modeCombo.addActionListener(e ->
                 mode = (String) modeCombo.getSelectedItem()
@@ -55,6 +57,13 @@ public class JournalLine extends JPanel{
         
         JLabel amountLabel = new JLabel("Amount: ");
         JTextField amountField = new JTextField(8);
+        
+        JComboBox<String> opeCombo = new JComboBox<>(new String[]{"+", "-"});
+        operation = (String) opeCombo.getSelectedItem();
+
+        opeCombo.addActionListener(e ->
+                operation = (String) opeCombo.getSelectedItem()
+        );
 
         amountField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -93,6 +102,7 @@ public class JournalLine extends JPanel{
                 modeLabel,
                 modeCombo,
                 amountLabel,
+                opeCombo,
                 amountField
                 
         ));
@@ -104,6 +114,7 @@ public class JournalLine extends JPanel{
         add(modeLabel);
         add(modeCombo);
         add(amountLabel);
+        add(opeCombo);
         add(amountField);
         add(newDelBtn);
     }
@@ -116,6 +127,10 @@ public class JournalLine extends JPanel{
     
     public Account getAccount() {
         return this.account;
+    }
+    
+    public String getOperation() {
+        return this.operation;
     }
     
     public double getAmount() {

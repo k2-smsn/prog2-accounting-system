@@ -27,6 +27,7 @@ public class JournalEntryPanel extends JPanel{
     private JPanel journLinesPanel = new JPanel();
     private MainFrame main;
     
+    ArrayList<JournalLine> JournLines = new ArrayList<>();
     private ArrayList<Account> accountsInline = new ArrayList<>();
 
     public JournalEntryPanel(MainFrame main) {
@@ -122,8 +123,6 @@ public class JournalEntryPanel extends JPanel{
     }
     
     public void getAccountsInLines() {
-        ArrayList<JournalLine> JournLines = new ArrayList<>();
-        
         JournLines.clear();
         for(int i = 0; i < journLinesPanel.getComponentCount(); i++) {
             if (journLinesPanel.getComponent(i) instanceof JournalLine) {
@@ -135,6 +134,13 @@ public class JournalEntryPanel extends JPanel{
         for(int i = 0; i < JournLines.size(); i++) {
             accountsInline.add(JournLines.get(i).getAccount());
             System.out.println(accountsInline);
+        }
+    }
+    
+    public void make_transdaction() {
+        for(int i = 0; i < JournLines.size(); i++) {
+            Account acc = JournLines.get(i).getAccount();
+            
         }
     }
 }

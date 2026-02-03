@@ -39,7 +39,7 @@ public class JournalLine extends JPanel{
         
         JLabel accLabel = new JLabel("Account: ");
 
-        JComboBox<String> accCombo = new JComboBox<>(common.DataBase.getAccNames().toArray(new String[0]));
+        JComboBox<Account> accCombo = new JComboBox<>(common.DataBase.getAccounts().toArray(new Account[0]));
         
         JLabel modeLabel = new JLabel("Mode: ");
 

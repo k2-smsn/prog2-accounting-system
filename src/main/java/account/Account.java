@@ -103,5 +103,10 @@ public class Account extends JPanel{
 
         return code.toString();
     }
+    
+    @Override
+    public String toString() {
+        return name + " (" + type + ")";
+    }
 
 }

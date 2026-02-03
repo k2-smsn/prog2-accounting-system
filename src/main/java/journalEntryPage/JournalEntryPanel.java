@@ -9,6 +9,7 @@ package journalEntryPage;
  * @author k2
  */
 
+import account.Account;
 import java.awt.Component;
 import datePanel.DatePanel;
 import javax.swing.*;
@@ -25,6 +26,8 @@ public class JournalEntryPanel extends JPanel{
     private JTextField descriptionField;
     private JPanel journLinesPanel = new JPanel();
     private MainFrame main;
+    
+    private ArrayList<Account> accountsInline = new ArrayList<>();
 
     public JournalEntryPanel(MainFrame main) {
         this.main = main;
@@ -82,7 +85,13 @@ public class JournalEntryPanel extends JPanel{
             journLinesPanel.repaint();
         });
 
-        submitBtn.addActionListener(e -> {});
+        submitBtn.addActionListener(e -> {
+            getAccountsInLines();
+            
+            journLinesPanel.removeAll();
+            journLinesPanel.revalidate();
+            journLinesPanel.repaint();
+        });
         
         ArrayList<Component> c = new ArrayList<>(Arrays.asList(backBtn, addLineBtn, submitBtn));
         setFont(c);
@@ -112,5 +121,21 @@ public class JournalEntryPanel extends JPanel{
         return descriptionField.getText();
     }
     
+    public void getAccountsInLines() {
+        ArrayList<JournalLine> JournLines = new ArrayList<>();
+        
+        JournLines.clear();
+        for(int i = 0; i < journLinesPanel.getComponentCount(); i++) {
+            if (journLinesPanel.getComponent(i) instanceof JournalLine) {
+                JournLines.add((JournalLine) journLinesPanel.getComponent(i));
+            }
+        }
+            
+        accountsInline.clear();
+        for(int i = 0; i < JournLines.size(); i++) {
+            accountsInline.add(JournLines.get(i).getAccount());
+            System.out.println(accountsInline);
+        }
+    }
 }
 

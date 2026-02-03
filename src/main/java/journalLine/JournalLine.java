@@ -26,7 +26,7 @@ import javax.swing.event.DocumentListener;
  * @author k2
  */
 public class JournalLine extends JPanel{
-    private String name;
+    private Account account;
     private String mode;
     private double amount;
     
@@ -41,10 +41,13 @@ public class JournalLine extends JPanel{
 
         JComboBox<Account> accCombo = new JComboBox<>(common.DataBase.getAccounts().toArray(new Account[0]));
         
+        accCombo.addActionListener(e -> {
+            account = (Account) accCombo.getSelectedItem();
+        });
+        
         JLabel modeLabel = new JLabel("Mode: ");
 
-        JComboBox<String> modeCombo =
-                new JComboBox<>(new String[]{"Debit", "Credit"});
+        JComboBox<String> modeCombo = new JComboBox<>(new String[]{"Debit", "Credit"});
 
         modeCombo.addActionListener(e ->
                 mode = (String) modeCombo.getSelectedItem()
@@ -54,8 +57,11 @@ public class JournalLine extends JPanel{
         JTextField amountField = new JTextField(8);
 
         amountField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
             public void insertUpdate(DocumentEvent e) { sync(); }
+            @Override
             public void removeUpdate(DocumentEvent e) { sync(); }
+            @Override
             public void changedUpdate(DocumentEvent e) { sync(); }
 
             private void sync() {
@@ -108,12 +114,17 @@ public class JournalLine extends JPanel{
         }
     }
     
-    public String getName() {
-        return this.name;
+    public Account getAccount() {
+        return this.account;
     }
     
     public double getAmount() {
         return this.amount;
+    }
+    
+    @Override
+    public String toString() {
+        return "tibo";
     }
     
 }

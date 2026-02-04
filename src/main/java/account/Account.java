@@ -87,17 +87,23 @@ public class Account extends JPanel{
         return this.value;
     }
     
-    public void setValue(String operation, double amount) {
-        switch (operation) {
-            case "+":
-                this.value += amount;
-                break;
-            case "-":
-                this.value -= amount;
-                break;
-            default:
-                System.out.print("acc set value error");
-                break;
+    public void debit(double amount) {
+        if(this.type.equals("Asset") || this.type.equals("Expenses")) {
+            this.value += amount;
+        }
+        
+        else {
+            this.value -= amount;
+        }
+    }
+    
+    public void credit(double amount) {
+        if(this.type.equals("Asset") || this.type.equals("Expenses")) {
+            this.value -= amount;
+        }
+        
+        else {
+            this.value += amount;
         }
     }
 

@@ -87,7 +87,7 @@ public class ChartOfAccPanel extends JPanel{
         typeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         JComboBox<String> typeCombo = new JComboBox<>(new String[] 
-                        {"Asset", "Liability", "Equity", "Expenses"});
+                        {"Asset", "Expenses", "Liability", "Equity", "Income"});
         Dimension typeComboSize = new Dimension(300, 36);
         typeCombo.setPreferredSize(typeComboSize);
         typeCombo.setMinimumSize(typeComboSize);

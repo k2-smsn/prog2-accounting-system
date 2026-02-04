@@ -148,15 +148,20 @@ public class JournalEntryPanel extends JPanel{
             for(int i = 0; i < JournLines.size(); i++) {
                 Account acc = JournLines.get(i).getAccount();
                 String mode = JournLines.get(i).getMode();
+                double amount = JournLines.get(i).getAmount();
                 
                 if("Debit".equals(mode)) {
-                    acc.debit();
+                    acc.debit(amount);
                 }
                 
                 else {
-                    acc.credit();
+                    acc.credit(amount);
                 }
             }
+        }
+        
+        else {
+            System.out.println("lines's modes do not equal");
         }
         
         

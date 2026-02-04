@@ -87,6 +87,7 @@ public class JournalEntryPanel extends JPanel{
 
         submitBtn.addActionListener(e -> {
             getJournalLines();
+            createEntry();
             makeTransaction();
             
             journLinesPanel.removeAll();
@@ -168,6 +169,15 @@ public class JournalEntryPanel extends JPanel{
         System.out.println(common.DataBase.getAccValues());
         
         JournLines.clear();
+    }
+    
+    public void createEntry() {
+        LocalDate date = datePanel.getDate();
+        String desc = descriptionField.getText();
+        
+        System.out.println(date);
+        System.out.println("Description: "+ desc);
+        System.out.println(JournLines);
     }
 }
 

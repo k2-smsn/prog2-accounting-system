@@ -130,7 +130,7 @@ public class JournalLine extends JPanel{
     
     @Override
     public String toString() {
-        return "tibo";
+        return "Account: " + account.getName() + " -: "+ getMode() + " Amount: "+ getAmount();
     }
     
 }

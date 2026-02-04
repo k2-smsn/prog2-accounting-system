@@ -225,7 +225,6 @@ public class ChartOfAccPanel extends JPanel{
             acc.buildPanel();
             accsPanel.add(acc);
         }
-
         
         accsPanel.revalidate();
         accsPanel.repaint();

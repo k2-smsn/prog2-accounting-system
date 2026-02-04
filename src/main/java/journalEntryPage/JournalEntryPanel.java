@@ -27,8 +27,7 @@ public class JournalEntryPanel extends JPanel{
     private JPanel journLinesPanel = new JPanel();
     private MainFrame main;
     
-    ArrayList<JournalLine> JournLines = new ArrayList<>();
-    private ArrayList<Account> accountsInline = new ArrayList<>();
+    private ArrayList<JournalLine> JournLines = new ArrayList<>();
 
     public JournalEntryPanel(MainFrame main) {
         this.main = main;
@@ -87,7 +86,7 @@ public class JournalEntryPanel extends JPanel{
         });
 
         submitBtn.addActionListener(e -> {
-            getAccountsInLines();
+            getJournalLines();
             makeTransaction();
             
             journLinesPanel.removeAll();
@@ -123,42 +122,47 @@ public class JournalEntryPanel extends JPanel{
         return descriptionField.getText();
     }
     
-    public void getAccountsInLines() {
+    public void getJournalLines() {
         JournLines.clear();
         for(int i = 0; i < journLinesPanel.getComponentCount(); i++) {
             if (journLinesPanel.getComponent(i) instanceof JournalLine) {
                 JournLines.add((JournalLine) journLinesPanel.getComponent(i));
             }
         }
-        
-        /*
-        accountsInline.clear();
-        for(int i = 0; i < JournLines.size(); i++) {
-            accountsInline.add(JournLines.get(i).getAccount());
-            System.out.println(accountsInline);
-        }*/
     }
     
     public void makeTransaction() {
+        int debitCount = 0;
+        int creditCount = 0;
+        
         for(int i = 0; i < JournLines.size(); i++) {
-            Account acc = JournLines.get(i).getAccount();
-            String operation = JournLines.get(i).getOperation();
-            double amount = JournLines.get(i).getAmount();
-            acc.setValue(operation, amount);
+            if(JournLines.get(i).getMode().equals("Debit")) {
+                debitCount += 1;
+            }
+            else {
+                creditCount += 1;
+            }
         }
         
-        /*
-        for(int i = 0; i < common.DataBase.getAccounts().size(); i++) {
-            Account acc = common.DataBase.getAccounts().get(i);
-            System.out.println(acc.getValue());
+        if(debitCount == creditCount) {
+            for(int i = 0; i < JournLines.size(); i++) {
+                Account acc = JournLines.get(i).getAccount();
+                String mode = JournLines.get(i).getMode();
+                
+                if("Debit".equals(mode)) {
+                    acc.debit();
+                }
+                
+                else {
+                    acc.credit();
+                }
+            }
         }
-        */
+        
         
         System.out.println(common.DataBase.getAccValues());
         
-        
         JournLines.clear();
-        
     }
 }
 

@@ -86,13 +86,19 @@ public class JournalEntryPanel extends JPanel{
         });
 
         submitBtn.addActionListener(e -> {
-            getJournalLines();
-            createEntry();
-            makeTransaction();
             
-            journLinesPanel.removeAll();
-            journLinesPanel.revalidate();
-            journLinesPanel.repaint();
+            try {
+                getJournalLines();
+                makeTransaction();
+
+                journLinesPanel.removeAll();
+                journLinesPanel.revalidate();
+                journLinesPanel.repaint();
+            } 
+            catch (Exception ex) {
+                System.out.println("journ entry submit error");
+            }
+            
         });
         
         ArrayList<Component> c = new ArrayList<>(Arrays.asList(backBtn, addLineBtn, submitBtn));
@@ -146,17 +152,21 @@ public class JournalEntryPanel extends JPanel{
         }
         
         if(debitCount == creditCount) {
+            LocalDate date = datePanel.getDate();
+            String desc = descriptionField.getText();
+            
             for(int i = 0; i < JournLines.size(); i++) {
                 Account acc = JournLines.get(i).getAccount();
                 String mode = JournLines.get(i).getMode();
                 double amount = JournLines.get(i).getAmount();
                 
-                if("Debit".equals(mode)) {
-                    acc.debit(amount);
+                if(mode.equals("Debit")) {
+                    acc.debit(date, desc, amount);
+                    
                 }
                 
-                else {
-                    acc.credit(amount);
+                else { //if it's not debit then it's credit
+                    acc.credit(date, desc, amount);
                 }
             }
         }
@@ -171,13 +181,6 @@ public class JournalEntryPanel extends JPanel{
         JournLines.clear();
     }
     
-    public void createEntry() {
-        LocalDate date = datePanel.getDate();
-        String desc = descriptionField.getText();
-        
-        System.out.println(date);
-        System.out.println("Description: "+ desc);
-        System.out.println(JournLines);
-    }
+    
 }
 

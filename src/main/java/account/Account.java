@@ -10,7 +10,9 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.random;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -29,7 +31,7 @@ public class Account extends JPanel{
     private String type;
     private double value;
     
-    //static ArrayList<Account> accounts = common.DataBase.getAccounts();
+    private ArrayList<ArrayList<String>> entries = new ArrayList<>();
     
     public Account(String name, String type, double value) {
         this.id = randomCode();
@@ -87,7 +89,7 @@ public class Account extends JPanel{
         return this.value;
     }
     
-    public void debit(double amount) {
+    public void debit(LocalDate date, String desc, double amount) {
         if(this.type.equals("Asset") || this.type.equals("Expenses")) {
             this.value += amount;
         }
@@ -95,9 +97,11 @@ public class Account extends JPanel{
         else {
             this.value -= amount;
         }
+        
+        addEntry(date, desc, amount, 0.0);
     }
     
-    public void credit(double amount) {
+    public void credit(LocalDate date, String desc, double amount) {
         if(this.type.equals("Asset") || this.type.equals("Expenses")) {
             this.value -= amount;
         }
@@ -105,6 +109,19 @@ public class Account extends JPanel{
         else {
             this.value += amount;
         }
+        
+        addEntry(date, desc, 0.0, amount);
+    }
+    
+    public void addEntry(LocalDate date, String desc, double debitAmt, double creditAmt) {
+        ArrayList<String> newEntry = new ArrayList<>(Arrays.asList(
+                date.toString(),
+                desc,
+                Double.toString(debitAmt),
+                Double.toString(creditAmt)
+        ));
+        
+        entries.add(newEntry);
     }
 
     static String randomCode() {

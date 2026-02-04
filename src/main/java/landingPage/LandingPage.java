@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import journalEntryPage.JournalEntryPanel;
+import ledgerPage.ledgerPanel;
 import mainFrame.MainFrame;
 
 /**
@@ -35,7 +36,7 @@ public class LandingPage extends JPanel{
         
         JButton ledgerBtn = new JButton("Ledger");
         ledgerBtn.addActionListener(e -> {
-            
+            main.showPanel(new ledgerPanel(main));
         }); 
         
         JButton trialBalBtn = new JButton("Trial Balance");
@@ -50,6 +51,7 @@ public class LandingPage extends JPanel{
         
         add(coaBtn);
         add(journEntryBtn);
+        add(ledgerBtn);
     }
     
 }

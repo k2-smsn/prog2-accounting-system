@@ -27,6 +27,10 @@ import mainFrame.MainFrame;
  */
 public class ledgerPanel extends JPanel {
     private MainFrame main;
+    private JLabel totalLabel;
+    private JComboBox accCombo;
+    private JTable table;
+    private DefaultTableModel tableModel;
     
     public ledgerPanel(MainFrame main) {
         this.main = main;
@@ -35,16 +39,22 @@ public class ledgerPanel extends JPanel {
         createNorthPanel();
         createCenterPanel();
         createFooter();
+        
+        updatTable();
     }
     
     private void createNorthPanel() {
         JPanel northPanel = new JPanel();
         northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.X_AXIS));
         
-        JComboBox accCombo = new JComboBox(common.DataBase.getAccounts().toArray(new Account[0]));
+        accCombo = new JComboBox(common.DataBase.getAccounts().toArray(new Account[0]));
         accCombo.setFont(new Font("MV Boli", Font.PLAIN, 24));
         
-        JLabel totalLabel = new JLabel("Bayag");
+        accCombo.addActionListener(e -> {
+            updatTable();
+        });
+        
+        totalLabel = new JLabel("Bayag");
         totalLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
         
         northPanel.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -58,17 +68,17 @@ public class ledgerPanel extends JPanel {
     
     private void createCenterPanel() {
         String[] columns = {"Date", "Description", "Debit", "Credit"};
-        DefaultTableModel tableModel = new DefaultTableModel(columns, 0) {
+        tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; // make read only
             }
         };
         
-        JTable table = new JTable(tableModel);
+        table = new JTable(tableModel);
         table.setFont(new Font("MV Boli", Font.PLAIN, 24));
         table.setRowHeight(22); 
-        table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
+        table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 20));
 
 
         
@@ -94,4 +104,27 @@ public class ledgerPanel extends JPanel {
         add(footerPanel, BorderLayout.SOUTH);
     }
     
+    private void updatTable() {
+        tableModel.setRowCount(0); // clear existing rows
+
+        Account selectedAccount = (Account) accCombo.getSelectedItem();
+        if (selectedAccount == null) return;
+        
+        double total = 0;
+        
+        ArrayList<ArrayList<String>> currentEntries = selectedAccount.getEntries();
+
+        for (int i = 0; i < currentEntries.size(); i++) {
+            //double debit = Double.parseDouble(entries.get(i).get(2));
+            //double credit = Double.parseDouble(entries.get(i).get(3));
+            total = selectedAccount.getValue();
+            
+            ArrayList<String> currentEntry = currentEntries.get(i);
+
+            String[] row = {currentEntry.get(0), currentEntry.get(1), currentEntry.get(2), currentEntry.get(3)};
+            tableModel.addRow(row);
+        }
+
+        totalLabel.setText("Total: " + total);
+    }
 }

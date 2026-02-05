@@ -89,6 +89,10 @@ public class Account extends JPanel{
         return this.value;
     }
     
+    public ArrayList<ArrayList<String>> getEntries() {
+        return this.entries;
+    }
+    
     public void debit(LocalDate date, String desc, double amount) {
         if(this.type.equals("Asset") || this.type.equals("Expenses")) {
             this.value += amount;

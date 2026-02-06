@@ -31,12 +31,13 @@ import javax.swing.JScrollPane;
 import landingPage.LandingPage;
 import mainFrame.MainFrame;
 
-public class ChartOfAccPanel extends JPanel{
+public class ChartOfAccPanel extends JPanel{ //EXTEND JPANEL TO TAKE IN BY MAIN FRAME
     
     static JLabel warnLabel = new JLabel("-");
     static JPanel accsPanel = new JPanel();
     
     public ChartOfAccPanel(MainFrame main) {
+        //SECTIONS SETUP AND INITIALIZATION
         //NAME SECTION
         
         JLabel nameLabel = new JLabel("Name:");
@@ -104,21 +105,20 @@ public class ChartOfAccPanel extends JPanel{
         
         submitBtn.addActionListener((ActionEvent e) -> {
             try {
-                String newName = nameField.getText();
+                String newName = nameField.getText(); 
                 String newType = typeCombo.getSelectedItem().toString();
-                double newValue = Integer.parseInt(valueField.getText());
+                double newValue = Integer.parseInt(valueField.getText()); //GET INPUTS
                 
-                Account newAccPanel = new Account(newName, newType, newValue);
-                common.DataBase.addAccount(newAccPanel);
-                showAccounts();
+                Account newAccPanel = new Account(newName, newType, newValue); //CREATE NEW ACCOUNT OBJECT
+                common.DataBase.addAccount(newAccPanel); //ADD TO DATABASE
+                showAccounts(); //UPDATE UI
                 
                 nameField.setText("");
-                valueField.setText("");
-                
-                //System.out.print(common.DataBase.getAccNames());
+                valueField.setText(""); //Clear fields after submit
+               
             } 
             catch (Exception ex) {
-                warnLabel.setText("Invalid input");
+                warnLabel.setText("Invalid input"); //HANDLE WRONG INPUT
             }
         });        
         
@@ -152,7 +152,7 @@ public class ChartOfAccPanel extends JPanel{
         
         JButton backBtn = new JButton("<");
         
-        backBtn.addActionListener(e -> {
+        backBtn.addActionListener(e -> { //GO BACK TO HOME PAGE FUNCTION
             main.showDefault();
         });
         
@@ -218,10 +218,10 @@ public class ChartOfAccPanel extends JPanel{
         }
     }
     
-    void showAccounts() {
-        accsPanel.removeAll();
+    void showAccounts() { //function to update UI
+        accsPanel.removeAll(); 
         
-        for(Account acc : common.DataBase.getAccounts()) {
+        for(Account acc : common.DataBase.getAccounts()) { //LOOP THROUGH ACCOUNTS TO SHOW
             acc.buildPanel();
             accsPanel.add(acc);
         }

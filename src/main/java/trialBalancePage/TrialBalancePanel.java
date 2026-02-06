@@ -30,19 +30,25 @@ public class TrialBalancePanel extends JPanel {
     private JComboBox accCombo;
     private JTable table;
     private DefaultTableModel tableModel;
+    private JLabel warnLabel = new JLabel();
     
     public TrialBalancePanel(MainFrame main) {
         this.main = main;
         setLayout(new BorderLayout());
-            
+        
+        //SET UP MAIN PANEL
         createCenterPanel();
         createFooter();
     }
     
     private void createCenterPanel() {
-        ArrayList<Account> accounts = common.DataBase.getAccounts();
+        ArrayList<Account> accounts = common.DataBase.getAccounts(); //get accounts from database
+        
+        if(accounts.isEmpty()) { //handle no accounts situation
+            warnLabel.setText("NO ACCOUNTS YET"); 
+        }
 
-        String[] columns = {"Account", "Debit", "Credit"};
+        String[] columns = {"Account", "Debit", "Credit"}; //set up table columns
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -71,20 +77,21 @@ public class TrialBalancePanel extends JPanel {
                 }
             }
 
-            tableModel.addRow(new Object[]{
+            tableModel.addRow(new Object[]{ //add new row to table
                 acc.getName(),
                 String.format("%.2f", debit),
                 String.format("%.2f", credit)
             });
         }
-
+        
+        //handle bottom row for total
         tableModel.addRow(new Object[]{
             "TOTAL",
             String.format("%.2f", totalDebit),
             String.format("%.2f", totalCredit)
         });
 
-
+        //set up table
         table = new JTable(tableModel);
         table.setFont(new Font("SansSerif", Font.PLAIN, 18));
         table.setRowHeight(26);
@@ -108,6 +115,8 @@ public class TrialBalancePanel extends JPanel {
         
         footerPanel.add(Box.createRigidArea(new Dimension(10, 10)));
         footerPanel.add(backBtn);
+        footerPanel.add(Box.createHorizontalGlue());
+        footerPanel.add(warnLabel); //include warn label
         footerPanel.add(Box.createHorizontalGlue());
         
         add(footerPanel, BorderLayout.SOUTH);

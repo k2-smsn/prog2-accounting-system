@@ -22,7 +22,7 @@ public class DatePanel extends JPanel{
     private JSpinner dateSpinner;
 
     public DatePanel() {
-        setLayout(new FlowLayout(FlowLayout.LEFT));
+        setLayout(new FlowLayout(FlowLayout.LEFT)); //flow components to left
 
         JLabel label = new JLabel("Date:");
         label.setPreferredSize(new Dimension(100, 40));
@@ -43,6 +43,7 @@ public class DatePanel extends JPanel{
         JSpinner.DateEditor editor = new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd");
         dateSpinner.setEditor(editor);
         
+        //Font setting
         ArrayList<Component> c = new ArrayList<>(Arrays.asList(label, dateSpinner));
         setFont(c);
 
@@ -58,7 +59,7 @@ public class DatePanel extends JPanel{
                    .toLocalDate();
     }
     
-    public void setFont(ArrayList<Component> comps) {
+    public void setFont(ArrayList<Component> comps) { //set font function
         for (int i = 0; i < comps.size(); i++) {
             comps.get(i).setFont(new Font("MV Boli", Font.PLAIN, 24));
         }

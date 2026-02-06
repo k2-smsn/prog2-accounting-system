@@ -31,16 +31,18 @@ public class ledgerPanel extends JPanel {
     private JComboBox accCombo;
     private JTable table;
     private DefaultTableModel tableModel;
+    private JLabel warnLabel = new JLabel();
     
     public ledgerPanel(MainFrame main) {
         this.main = main;
         setLayout(new BorderLayout());
         
+        //ASSEMBLE MAIN PANEL
         createNorthPanel();
         createCenterPanel();
         createFooter();
         
-        updatTable();
+        updatTable(); //UPDATE TABLE TO LATEST DATA
     }
     
     private void createNorthPanel() {
@@ -51,12 +53,13 @@ public class ledgerPanel extends JPanel {
         accCombo.setFont(new Font("MV Boli", Font.PLAIN, 24));
         
         accCombo.addActionListener(e -> {
-            updatTable();
+            updatTable(); //update to latest data
         });
         
         totalLabel = new JLabel("Total");
         totalLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
         
+        //ASEMBLE NORTH PANEL
         northPanel.add(Box.createRigidArea(new Dimension(10, 0)));
         northPanel.add(accCombo);
         northPanel.add(Box.createHorizontalGlue());
@@ -67,22 +70,22 @@ public class ledgerPanel extends JPanel {
     }
     
     private void createCenterPanel() {
-        String[] columns = {"Date", "Description", "Debit", "Credit"};
-        tableModel = new DefaultTableModel(columns, 0) {
+        String[] columns = {"Date", "Description", "Debit", "Credit"}; //NAME AND CREATE COLUMNS FOR TABLE
+        tableModel = new DefaultTableModel(columns, 0) { //CREATE NEW TABLE LOOK WITH CUSTOM COLUMNS
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // make read only
+                return false; // make table read only
             }
         };
         
-        table = new JTable(tableModel);
+        table = new JTable(tableModel); //initialize table
         table.setFont(new Font("MV Boli", Font.PLAIN, 24));
         table.setRowHeight(22); 
         table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 20));
 
 
         
-        JScrollPane scrollPane = new JScrollPane(table);
+        JScrollPane scrollPane = new JScrollPane(table); //Make table scrollable
         add(scrollPane, BorderLayout.CENTER);
     }
     
@@ -90,31 +93,37 @@ public class ledgerPanel extends JPanel {
         JPanel footerPanel = new JPanel();
         footerPanel.setLayout(new BoxLayout(footerPanel, BoxLayout.X_AXIS));
         
-        JButton backBtn = new JButton("<");
+        JButton backBtn = new JButton("<"); //back to home btn
         backBtn.setFont(new Font("MV Boli", Font.PLAIN, 24));
         
         backBtn.addActionListener(e -> {
-            main.showDefault();
+            main.showDefault(); //go back to home
         });
         
+        //setup footer
         footerPanel.add(Box.createRigidArea(new Dimension(10, 10)));
         footerPanel.add(backBtn);
+        footerPanel.add(Box.createHorizontalGlue());
+        footerPanel.add(warnLabel); //include warn label
         footerPanel.add(Box.createHorizontalGlue());
         
         add(footerPanel, BorderLayout.SOUTH);
     }
     
-    private void updatTable() {
+    private void updatTable() { //GET LATEST DATA TO TABLE
         tableModel.setRowCount(0); // clear existing rows
 
-        Account selectedAccount = (Account) accCombo.getSelectedItem();
-        if (selectedAccount == null) return;
+        Account selectedAccount = (Account) accCombo.getSelectedItem(); //MAKE TABLE PER ACCOUNT
+        if (selectedAccount == null) { //handle no account situation
+            warnLabel.setText("NO ACCOUNTS TO SHOW");
+            return;
+        }; 
         
         double total = 0;
         
         ArrayList<ArrayList<String>> currentEntries = selectedAccount.getEntries();
 
-        for (int i = 0; i < currentEntries.size(); i++) {
+        for (int i = 0; i < currentEntries.size(); i++) { //loop through selected account entries to show in table
             total = selectedAccount.getValue();
             
             ArrayList<String> currentEntry = currentEntries.get(i);
@@ -123,6 +132,6 @@ public class ledgerPanel extends JPanel {
             tableModel.addRow(row);
         }
 
-        totalLabel.setText("Total: " + total);
+        totalLabel.setText("Total: " + total); //set total in UI
     }
 }

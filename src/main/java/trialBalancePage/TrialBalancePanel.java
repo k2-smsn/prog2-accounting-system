@@ -34,31 +34,9 @@ public class TrialBalancePanel extends JPanel {
     public TrialBalancePanel(MainFrame main) {
         this.main = main;
         setLayout(new BorderLayout());
-        
-        createNorthPanel();
+            
         createCenterPanel();
         createFooter();
-    }
-    
-    private void createNorthPanel() {
-        JPanel northPanel = new JPanel();
-        northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.X_AXIS));
-        
-        totalLabel = new JLabel("Total");
-        totalLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
-        
-        double total = 0;
-        for(int i = 0; i < common.DataBase.getAccounts().size(); i++) {
-            total += common.DataBase.getAccounts().get(i).getValue();
-        }
-        
-        totalLabel.setText(Double.toString(total));
-        
-        northPanel.add(Box.createHorizontalGlue());
-        northPanel.add(totalLabel);
-        northPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        
-        add(northPanel, BorderLayout.NORTH);
     }
     
     private void createCenterPanel() {

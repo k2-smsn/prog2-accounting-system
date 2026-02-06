@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import journalEntryPage.JournalEntryPanel;
 import ledgerPage.ledgerPanel;
 import mainFrame.MainFrame;
+import trialBalancePage.TrialBalancePanel;
 
 /**
  *
@@ -26,22 +27,26 @@ public class LandingPage extends JPanel{
         
         JButton coaBtn = new JButton("Chart of Accounts");
         coaBtn.addActionListener(e -> {
+            main.setTitle("Chart Of Accounts");
             main.showPanel(new ChartOfAccPanel(main));
         }); 
         
         JButton journEntryBtn = new JButton("Journal Entry");
         journEntryBtn.addActionListener(e -> {
+            main.setTitle("Journal Entry");
             main.showPanel(new JournalEntryPanel(main));
         }); 
         
         JButton ledgerBtn = new JButton("Ledger");
         ledgerBtn.addActionListener(e -> {
+            main.setTitle("Ledger");
             main.showPanel(new ledgerPanel(main));
         }); 
         
         JButton trialBalBtn = new JButton("Trial Balance");
         trialBalBtn.addActionListener(e -> {
-            
+            main.setTitle("Trial Balance");
+            main.showPanel(new TrialBalancePanel(main));
         }); 
         
         JButton reportBtn = new JButton("Financial report");
@@ -52,6 +57,7 @@ public class LandingPage extends JPanel{
         add(coaBtn);
         add(journEntryBtn);
         add(ledgerBtn);
+        add(trialBalBtn);
     }
     
 }

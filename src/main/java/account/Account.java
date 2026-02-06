@@ -29,6 +29,7 @@ public class Account extends JPanel{
     private String id;
     private String name;
     private String type;
+    private String NormalSide;
     private double value;
     
     private ArrayList<ArrayList<String>> entries = new ArrayList<>();
@@ -38,6 +39,13 @@ public class Account extends JPanel{
         this.name = name;
         this.type = type;
         this.value = value;
+        
+        if(this.type.equals("Asset") || this.type.equals("Expenses")) {
+            this.NormalSide = "Debit";
+        }
+        else {
+            this.NormalSide = "Credit";
+        }
     }
     
     public void buildPanel() {
@@ -94,7 +102,7 @@ public class Account extends JPanel{
     }
     
     public void debit(LocalDate date, String desc, double amount) {
-        if(this.type.equals("Asset") || this.type.equals("Expenses")) {
+        if(this.NormalSide.equals("Debit")) {
             this.value += amount;
         }
         
@@ -106,12 +114,12 @@ public class Account extends JPanel{
     }
     
     public void credit(LocalDate date, String desc, double amount) {
-        if(this.type.equals("Asset") || this.type.equals("Expenses")) {
-            this.value -= amount;
+        if(this.NormalSide.equals("Credit")) {
+            this.value += amount;
         }
         
         else {
-            this.value += amount;
+            this.value -= amount;
         }
         
         addEntry(date, desc, 0.0, amount);
@@ -126,6 +134,30 @@ public class Account extends JPanel{
         ));
         
         entries.add(newEntry);
+    }
+    
+    public String getNormalSide() {
+        return this.NormalSide;
+    }
+    
+    public double getTotalDebit() {
+        double debitTotal = 0;
+        
+        for(int i = 0; i < this.entries.size(); i++) {
+            debitTotal += Double.parseDouble(entries.get(i).get(2));
+        }
+        
+        return debitTotal;
+    }
+    
+    public double getTotalCredit() {
+        double creditTotal = 0;
+        
+        for(int i = 0; i < this.entries.size(); i++) {
+            creditTotal += Double.parseDouble(entries.get(i).get(3));
+        }
+        
+        return creditTotal;
     }
 
     static String randomCode() {

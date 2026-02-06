@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ledgerPage;
+package trialBalancePage;
 
 import account.Account;
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -25,40 +24,36 @@ import mainFrame.MainFrame;
  *
  * @author k2
  */
-public class ledgerPanel extends JPanel {
+public class TrialBalancePanel extends JPanel {
     private MainFrame main;
     private JLabel totalLabel;
     private JComboBox accCombo;
     private JTable table;
     private DefaultTableModel tableModel;
     
-    public ledgerPanel(MainFrame main) {
+    public TrialBalancePanel(MainFrame main) {
         this.main = main;
         setLayout(new BorderLayout());
         
         createNorthPanel();
         createCenterPanel();
         createFooter();
-        
-        updatTable();
     }
     
     private void createNorthPanel() {
         JPanel northPanel = new JPanel();
         northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.X_AXIS));
         
-        accCombo = new JComboBox(common.DataBase.getAccounts().toArray(new Account[0]));
-        accCombo.setFont(new Font("MV Boli", Font.PLAIN, 24));
-        
-        accCombo.addActionListener(e -> {
-            updatTable();
-        });
-        
         totalLabel = new JLabel("Total");
         totalLabel.setFont(new Font("MV Boli", Font.PLAIN, 24));
         
-        northPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        northPanel.add(accCombo);
+        double total = 0;
+        for(int i = 0; i < common.DataBase.getAccounts().size(); i++) {
+            total += common.DataBase.getAccounts().get(i).getValue();
+        }
+        
+        totalLabel.setText(Double.toString(total));
+        
         northPanel.add(Box.createHorizontalGlue());
         northPanel.add(totalLabel);
         northPanel.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -67,24 +62,60 @@ public class ledgerPanel extends JPanel {
     }
     
     private void createCenterPanel() {
-        String[] columns = {"Date", "Description", "Debit", "Credit"};
+        ArrayList<Account> accounts = common.DataBase.getAccounts();
+
+        String[] columns = {"Account", "Debit", "Credit"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // make read only
+                return false;
             }
         };
-        
+
+        double totalDebit = 0;
+        double totalCredit = 0;
+
+        for (Account acc : accounts) { //loop through acc
+            double debit = 0;
+            double credit = 0; //initialize debit and credit for acc
+
+            if (acc.getNormalSide().equals("Debit")) { //process if account's normal side is debit
+                double balance = acc.getTotalDebit() - acc.getTotalCredit();
+                if (balance > 0) {
+                    debit = balance;
+                    totalDebit += balance; //accumulate total debit
+                }
+            } else { //process if credit
+                double balance = acc.getTotalCredit() - acc.getTotalDebit();
+                if (balance > 0) {
+                    credit = balance;
+                    totalCredit += balance; //accumulate total credit
+                }
+            }
+
+            tableModel.addRow(new Object[]{
+                acc.getName(),
+                String.format("%.2f", debit),
+                String.format("%.2f", credit)
+            });
+        }
+
+        tableModel.addRow(new Object[]{
+            "TOTAL",
+            String.format("%.2f", totalDebit),
+            String.format("%.2f", totalCredit)
+        });
+
+
         table = new JTable(tableModel);
-        table.setFont(new Font("MV Boli", Font.PLAIN, 24));
-        table.setRowHeight(22); 
-        table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 20));
+        table.setFont(new Font("SansSerif", Font.PLAIN, 18));
+        table.setRowHeight(26);
+        table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 18));
 
-
-        
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
     }
+
     
     private void createFooter() {
         JPanel footerPanel = new JPanel();
@@ -102,27 +133,5 @@ public class ledgerPanel extends JPanel {
         footerPanel.add(Box.createHorizontalGlue());
         
         add(footerPanel, BorderLayout.SOUTH);
-    }
-    
-    private void updatTable() {
-        tableModel.setRowCount(0); // clear existing rows
-
-        Account selectedAccount = (Account) accCombo.getSelectedItem();
-        if (selectedAccount == null) return;
-        
-        double total = 0;
-        
-        ArrayList<ArrayList<String>> currentEntries = selectedAccount.getEntries();
-
-        for (int i = 0; i < currentEntries.size(); i++) {
-            total = selectedAccount.getValue();
-            
-            ArrayList<String> currentEntry = currentEntries.get(i);
-
-            String[] row = {currentEntry.get(0), currentEntry.get(1), currentEntry.get(2), currentEntry.get(3)};
-            tableModel.addRow(row);
-        }
-
-        totalLabel.setText("Total: " + total);
     }
 }
